@@ -10,6 +10,8 @@ void testSmartStringFramework() {
     test_getString();
     test_addString();
     test_addChar();
+    test_copy();
+    test_equal();
 }
 
 void test_new_SmartString() {
@@ -121,4 +123,34 @@ void test_addChar() {
     }
 
     string.destroy(&string);
+}
+
+void test_copy() {
+    printf("* Test copy()...\n");
+    struct SmartString string = new_SmartStringFromString("It`s a simple test!");
+    struct SmartString copyString = string.copy(&string);
+
+    if (strcmp(string.row, copyString.row) == 0 && string.length == copyString.length) {
+        printf("    Ok\n");
+    } else {
+        printf("    Error\n");
+    }
+
+    string.destroy(&string);
+    copyString.destroy(&copyString);
+}
+
+void test_equal() {
+    printf("* Test equal()...\n");
+    struct SmartString string = new_SmartStringFromString("It`s a simple test!");
+    struct SmartString copyString = new_SmartStringFromString("It`s a simple test!");
+
+    if (string.equal(&string, &copyString)) {
+        printf("    Ok\n");
+    } else {
+        printf("    Error\n");
+    }
+
+    string.destroy(&string);
+    copyString.destroy(&copyString);
 }

@@ -10,7 +10,7 @@ void setString(SmartString* var, const char* string) {
     var->length = strlen(string);
 
     //free memory
-    free(&var->row);
+    var->destroy(var);
 
     //set row
     var->row = (char*) malloc(var->length + andLastSymbol);
@@ -67,10 +67,16 @@ void addChar(SmartString* to, char from) {
     string.destroy(&string);
 }
 
-//TODO: create this fucking function! And Test!
-SmartString substr(SmartString* string, int start, int stop) {
-    struct SmartString copy = new_SmartString();
-    return copy;
+SmartString copy(SmartString* this) {
+    return new_SmartStringFromString(this->row);
+}
+
+int equal(SmartString* left, SmartString* right) {
+    if (strcmp(left->row, right->row) == 0) {
+        return 1;
+    } else {
+        return 0;
+    }
 }
 
 //-------------------------------------------
@@ -79,9 +85,7 @@ SmartString substr(SmartString* string, int start, int stop) {
 
 void destroy(SmartString* this) {
     //free class memory
-    if (this->length > 1) {
-        free(&this->row);
-    }
+    free(this->row);
 }
 
 //-------------------------------------------
@@ -93,6 +97,8 @@ SmartString new_SmartString() {
 }
 
 SmartString new_SmartStringFromString(const char* var) {
+    size_t andLastSymbol = 1;
+
     //set start parameters
     struct SmartString obj;
 
@@ -100,7 +106,7 @@ SmartString new_SmartStringFromString(const char* var) {
     obj.length = strlen(var);
 
     //set row
-    obj.row = (char*) malloc(obj.length);
+    obj.row = (char*) malloc(obj.length + andLastSymbol);
     memset(obj.row, '\0', obj.length);
     strcpy(obj.row, var);
 
@@ -112,8 +118,9 @@ SmartString new_SmartStringFromString(const char* var) {
     obj.addString = &addString;
     obj.addChar = &addChar;
     obj.setString = &setString;
-    obj.substr = &substr;
     obj.destroy = &destroy;
+    obj.copy = &copy;
+    obj.equal = &equal;
 
     //end-------------------
     return obj;

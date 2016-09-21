@@ -19,7 +19,8 @@ typedef struct SmartString {
     char* (*getString) (struct SmartString*);
     void (*addString) (struct SmartString*, struct SmartString*);
     void (*addChar) (struct SmartString*, char);
-    struct SmartString (*substr)(struct SmartString*, int, int);
+    struct SmartString (*copy) (struct SmartString*);
+    int (*equal) (struct SmartString*, struct SmartString*);
 
     //destructor
     void (*destroy)(struct SmartString*);

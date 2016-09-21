@@ -14,5 +14,7 @@ void test_getChar();
 void test_getString();
 void test_addString();
 void test_addChar();
+void test_copy();
+void test_equal();
 
 #endif //CCLASECOMPILER_STRINGTESTS_H
