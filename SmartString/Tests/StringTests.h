@@ -22,5 +22,6 @@ void test_allTrim();
 void test_strRPos();
 void test_trim();
 void test_strReplace();
+void test_getBlock();
 
 #endif //CCLASECOMPILER_STRINGTESTS_H

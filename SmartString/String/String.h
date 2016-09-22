@@ -27,6 +27,7 @@ typedef struct SmartString {
     int (*strPos) (struct SmartString*, int, char);
     struct SmartString (*trim) (struct SmartString*);
     struct SmartString (*strReplace) (struct SmartString*, char*, char*);
+    struct SmartString (*getBlock) (struct SmartString*, char, char, int);
 
     //destructor
     void (*destroy)(struct SmartString*);

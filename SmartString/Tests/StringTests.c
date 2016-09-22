@@ -18,6 +18,7 @@ void testSmartStringFramework() {
     test_strPos();
     test_trim();
     test_strReplace();
+    test_getBlock();
 }
 
 void test_new_SmartString() {
@@ -278,4 +279,22 @@ void test_strReplace() {
     searchWord.destroy(&searchWord);
     replaceWord.destroy(&replaceWord);
     response.destroy(&response);
+}
+
+void test_getBlock() {
+    printf("* Test getBlock()...\n");
+    SmartString string = new_SmartStringFromString("Class main { if() {value {asdh lasdj {asdasd  }laksjd }1} value 2 }");
+    SmartString blockClass = string.getBlock(&string, '{', '}', 15);
+
+    SmartString blockClassValue = new_SmartStringFromString("value {asdh lasdj {asdasd  }laksjd }1");
+
+    if(blockClass.equal(&blockClass, &blockClassValue)) {
+        printf("    Ok\n");
+    } else {
+        printf("    Error\n");
+    }
+
+    string.destroy(&string);
+    blockClass.destroy(&blockClass);
+    blockClassValue.destroy(&blockClassValue);
 }

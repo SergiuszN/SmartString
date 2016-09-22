@@ -249,6 +249,45 @@ SmartString strReplace(SmartString* this, char* search, char* replace) {
     return newString;
 }
 
+SmartString getBlock(SmartString* this, char startChar, char stopChar, int startPosition) {
+    // declare vars
+    SmartString textInsideBlock = new_SmartString();
+    SmartString textWithOutBracket;
+    int counterBrackets = 0;
+
+    // get start block position
+    int startOfBlock = this->strPos(this, startPosition, startChar);
+
+    for (int i=startOfBlock; i < this->length; i++) {
+        // if find start brackets increment brackets counter
+        if (this->row[i] == startChar) {
+            counterBrackets += 1;
+        }
+
+        // if find stop brackets decrement brackets counter
+        if (this->row[i] == stopChar) {
+            counterBrackets -= 1;
+        }
+
+        // add char into text block to temp variable
+        textInsideBlock.addChar(&textInsideBlock, this->row[i]);
+
+        // is block end?
+        if (counterBrackets == 0) {
+            break;
+        }
+    }
+
+    // sub start and stop brackets
+    textWithOutBracket = textInsideBlock.subStr(&textInsideBlock,1,textInsideBlock.length-1);
+
+    // free memory
+    textInsideBlock.destroy(&textInsideBlock);
+
+    // return response
+    return textWithOutBracket;
+}
+
 
 //-------------------------------------------
 //              Destructor
@@ -299,6 +338,7 @@ SmartString new_SmartStringFromString(const char* var) {
     obj.strPos = &strPos;
     obj.trim = &trim;
     obj.strReplace = &strReplace;
+    obj.getBlock = &getBlock;
 
     //end-------------------
     return obj;
