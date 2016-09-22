@@ -119,6 +119,21 @@ SmartString subStr(SmartString* this, int start, int end) {
     return subString;
 }
 
+int strPos(SmartString* this, int startPosition, char needle) {
+    int endPosition = this->getLength(this);
+    int currentPosition = -1;
+
+    for (int i=startPosition; i<endPosition ; i++) {
+        if (this->row[i] == needle) {
+            currentPosition = i;
+            break;
+        }
+
+    }
+    return currentPosition;
+}
+
+
 //-------------------------------------------
 //              Destructor
 //-------------------------------------------
@@ -163,6 +178,7 @@ SmartString new_SmartStringFromString(const char* var) {
     obj.copy = &copy;
     obj.equal = &equal;
     obj.subStr = &subStr;
+    obj.strPos = &strPos;
 
     //end-------------------
     return obj;

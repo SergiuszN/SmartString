@@ -13,6 +13,7 @@ void testSmartStringFramework() {
     test_copy();
     test_equal();
     test_subStr();
+    test_strPos();
 }
 
 void test_new_SmartString() {
@@ -176,4 +177,23 @@ void test_subStr() {
 
     string.destroy(&string);
     subString.destroy(&subString);
+}
+
+void test_strPos() {
+    printf("* Test strPos()...\n");
+    SmartString string = new_SmartStringFromString("It`s a simple test!");
+
+    int startPosition = 3;
+    int currentPosition = 8;
+    char needle = 'i';
+
+    int foundPosition = string.strPos(&string, startPosition, needle);
+
+    if (foundPosition == currentPosition) {
+        printf("    Ok\n");
+    } else {
+            printf("    Error\n");
+    }
+
+    string.destroy(&string);
 }

@@ -17,5 +17,6 @@ void test_addChar();
 void test_copy();
 void test_equal();
 void test_subStr();
+void  test_strPos();
 
 #endif //CCLASECOMPILER_STRINGTESTS_H
