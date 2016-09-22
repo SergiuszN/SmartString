@@ -22,6 +22,7 @@ typedef struct SmartString {
     struct SmartString (*copy) (struct SmartString*);
     struct SmartString (*subStr) (struct SmartString*, int, int);
     int (*equal) (struct SmartString*, struct SmartString*);
+    int (*strRPos) (struct SmartString*, char*);
     int (*strPos) (struct SmartString*, int, char);
 
     //destructor

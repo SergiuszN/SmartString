@@ -119,6 +119,24 @@ SmartString subStr(SmartString* this, int start, int end) {
     return subString;
 }
 
+int strRPos(SmartString* haystack, char* needle)
+{
+    // function returns a position to the first occurrence
+    // of row needle in row haystack, or a 'int -1'
+    // if row needle is not part of haystack.
+    int notFound = -1;
+    int position = notFound;
+    // get pointer to first occurrence or null
+    char* pointer = strstr(haystack->row, needle);
+
+    //if pointer not null change position
+    if (pointer) {
+        position = (int) (pointer - haystack->row);
+    }
+
+    return position;
+}
+
 int strPos(SmartString* this, int startPosition, char needle) {
     int endPosition = this->getLength(this);
     int currentPosition = -1;
@@ -178,6 +196,7 @@ SmartString new_SmartStringFromString(const char* var) {
     obj.copy = &copy;
     obj.equal = &equal;
     obj.subStr = &subStr;
+    obj.strRPos = &strRPos;
     obj.strPos = &strPos;
 
     //end-------------------

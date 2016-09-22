@@ -13,6 +13,7 @@ void testSmartStringFramework() {
     test_copy();
     test_equal();
     test_subStr();
+    test_strRPos();
     test_strPos();
 }
 
@@ -179,6 +180,25 @@ void test_subStr() {
     subString.destroy(&subString);
 }
 
+void test_strRPos() {
+    printf("* Test strRPos()...\n");
+    SmartString string = new_SmartStringFromString("It`s a simple test!");
+    SmartString needle = new_SmartStringFromString("simple");
+
+    int truePosition = 7;
+
+    int foundPosition = string.strRPos(&string, needle.getString(&needle));
+
+    if (foundPosition == truePosition) {
+        printf("    Ok\n");
+    } else {
+        printf("    Error\n");
+    }
+
+    string.destroy(&string);
+    needle.destroy(&needle);
+}
+
 void test_strPos() {
     printf("* Test strPos()...\n");
     SmartString string = new_SmartStringFromString("It`s a simple test!");
@@ -192,7 +212,7 @@ void test_strPos() {
     if (foundPosition == currentPosition) {
         printf("    Ok\n");
     } else {
-            printf("    Error\n");
+        printf("    Error\n");
     }
 
     string.destroy(&string);
