@@ -19,13 +19,6 @@ SmartString fileReadAllLine(char* fileName) {
     return allFile;
 }
 
-//-------------------------------------------
-//              Destructor
-//-------------------------------------------
-
-void destroyService(Service* this) {
-
-}
 
 //-------------------------------------------
 //              Constructor

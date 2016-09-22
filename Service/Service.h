@@ -11,9 +11,6 @@ typedef struct Service {
 
     //functions
     struct SmartString (*fileReadAllLine) (char* fileName);
-
-    //destructor
-    void (*destroyService)(struct Service*);
 } Service;
 
 Service new_Service();
