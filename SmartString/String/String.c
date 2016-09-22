@@ -119,8 +119,24 @@ SmartString subStr(SmartString* this, int start, int end) {
     return subString;
 }
 
-int strRPos(SmartString* haystack, char* needle)
-{
+SmartString allTrim(SmartString* this) {
+    // delete all \n \t ' ' symbol from row
+    SmartString trimString = new_SmartString();
+
+    for (int i=0; i < this->length; i++) {
+        // if it`s \n \t ' ' skip step
+        if (this->row[i] == ' ' || this->row[i] == '\t' || this->row[i] == '\n') {
+            continue;
+        }
+        // else add char to trimString
+        trimString.addChar(&trimString, this->row[i]);
+    }
+
+    //return clear object
+    return trimString;
+}
+
+int strRPos(SmartString* haystack, char* needle) {
     // function returns a position to the first occurrence
     // of row needle in row haystack, or a 'int -1'
     // if row needle is not part of haystack.
@@ -197,6 +213,7 @@ SmartString new_SmartStringFromString(const char* var) {
     obj.equal = &equal;
     obj.subStr = &subStr;
     obj.strRPos = &strRPos;
+    obj.allTrim = &allTrim;
     obj.strPos = &strPos;
 
     //end-------------------

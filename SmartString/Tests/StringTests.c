@@ -14,6 +14,7 @@ void testSmartStringFramework() {
     test_equal();
     test_subStr();
     test_strRPos();
+    test_allTrim();
     test_strPos();
 }
 
@@ -197,6 +198,24 @@ void test_strRPos() {
 
     string.destroy(&string);
     needle.destroy(&needle);
+}
+
+void test_allTrim() {
+    printf("* Test allTrim()...\n");
+    SmartString string = new_SmartStringFromString("    It`s a \nsimple\t\t test!      ");
+    SmartString trueResponse = new_SmartStringFromString("It`sasimpletest!");
+
+    SmartString returnedResponse = string.allTrim(&string);
+
+    if (trueResponse.equal(&trueResponse, &returnedResponse)) {
+        printf("    Ok\n");
+    } else {
+        printf("    Error\n");
+    }
+
+    string.destroy(&string);
+    trueResponse.destroy(&trueResponse);
+    returnedResponse.destroy(&returnedResponse);
 }
 
 void test_strPos() {
