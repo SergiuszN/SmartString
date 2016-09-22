@@ -20,6 +20,7 @@ typedef struct SmartString {
     void (*addString) (struct SmartString*, struct SmartString*);
     void (*addChar) (struct SmartString*, char);
     struct SmartString (*copy) (struct SmartString*);
+    struct SmartString (*subStr) (struct SmartString*, int, int);
     int (*equal) (struct SmartString*, struct SmartString*);
 
     //destructor

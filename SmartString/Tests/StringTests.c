@@ -12,6 +12,7 @@ void testSmartStringFramework() {
     test_addChar();
     test_copy();
     test_equal();
+    test_subStr();
 }
 
 void test_new_SmartString() {
@@ -155,4 +156,24 @@ void test_equal() {
 
     string.destroy(&string);
     copyString.destroy(&copyString);
+}
+
+void test_subStr() {
+    printf("* Test subStr()...\n");
+    struct SmartString string = new_SmartStringFromString("It`s a simple test!");
+
+    int startPosition = 7;
+    int length = 6;
+    int stopPosition = startPosition + length;
+
+    struct SmartString subString = string.subStr(&string, startPosition, stopPosition);
+
+    if (strcmp(subString.row, "simple") == 0 && subString.length == 6) {
+        printf("    Ok\n");
+    } else {
+        printf("    Error\n");
+    }
+
+    string.destroy(&string);
+    subString.destroy(&subString);
 }

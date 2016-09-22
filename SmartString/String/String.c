@@ -93,6 +93,32 @@ int equal(SmartString* left, SmartString* right) {
     }
 }
 
+SmartString subStr(SmartString* this, int start, int end) {
+    //return sub row from this row
+    //start from 'int start'
+    //end in 'int end' or end of string if 'int end == -1'
+
+    //create new string
+    SmartString subString = new_SmartString();
+
+    //save length base row
+    int endPosition = this->getLength(this);
+
+    //if end position define save new length
+    int endPositionNotDefine = -1;
+    if (end != endPositionNotDefine) {
+        endPosition = end;
+    }
+
+    //save new sub string char by char
+    for (int i=start; i<endPosition; i++) {
+        subString.addChar(&subString, this->getChar(i, this));
+    }
+
+    //return sub string
+    return subString;
+}
+
 //-------------------------------------------
 //              Destructor
 //-------------------------------------------
@@ -136,6 +162,7 @@ SmartString new_SmartStringFromString(const char* var) {
     obj.destroy = &destroy;
     obj.copy = &copy;
     obj.equal = &equal;
+    obj.subStr = &subStr;
 
     //end-------------------
     return obj;
