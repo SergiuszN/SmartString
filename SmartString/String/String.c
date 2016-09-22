@@ -196,6 +196,59 @@ SmartString trim(SmartString* this) {
     return newRow;
 }
 
+SmartString strReplace(SmartString* this, char* search, char* replace) {
+    // create SmartString from replace row
+    SmartString replaceString = new_SmartStringFromString(replace);
+    // create base newString from base row
+    SmartString newString = this->copy(this);
+
+    // create free leftString and rightString
+    SmartString leftString = new_SmartString();
+    SmartString rightString = new_SmartString();
+
+    // set base parameters
+    int searchWordLength = strlen(search);
+    int nullPosition = -1;
+    int searchStringPosition;
+
+    // replace words while search words is set
+    do {
+        // find new position search row in base row
+        searchStringPosition = newString.strRPos(&newString, search);
+
+        // if search word find
+        if (searchStringPosition != nullPosition) {
+            // clear left adn right row
+            leftString.destroy(&leftString);
+            rightString.destroy(&rightString);
+
+            // set new left and right row
+            leftString = newString.subStr(&newString, 0, searchStringPosition);
+            rightString = newString.subStr(&newString, searchStringPosition + searchWordLength, -1);
+
+            // clear base row
+            newString.destroy(&newString);
+            newString = new_SmartString();
+
+            // set new base row
+            newString.addString(&newString, &leftString);
+            newString.addString(&newString, &replaceString);
+            newString.addString(&newString, &rightString);
+        } else {
+            // no more search keyword
+            break;
+        }
+    } while (1); // break point implemented in do
+
+    // free memory
+    replaceString.destroy(&replaceString);
+    leftString.destroy(&leftString);
+    rightString.destroy(&rightString);
+
+    // return new replaced row
+    return newString;
+}
+
 
 //-------------------------------------------
 //              Destructor
@@ -226,7 +279,7 @@ SmartString new_SmartStringFromString(const char* var) {
 
     //set row
     obj.row = (char*) malloc(obj.length + andLastSymbol);
-    memset(obj.row, '\0', obj.length);
+    memset(obj.row, '\0', obj.length + andLastSymbol);
     strcpy(obj.row, var);
 
     //connection all function
@@ -245,6 +298,7 @@ SmartString new_SmartStringFromString(const char* var) {
     obj.allTrim = &allTrim;
     obj.strPos = &strPos;
     obj.trim = &trim;
+    obj.strReplace = &strReplace;
 
     //end-------------------
     return obj;

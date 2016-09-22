@@ -17,7 +17,7 @@ typedef struct SmartString {
     size_t (*getLength) (struct SmartString*);
     char (*getChar) (int, struct SmartString*);
     char* (*getString) (struct SmartString*);
-    void (*addString) (struct SmartString*, struct SmartString*);
+    void (*addString)(struct SmartString*, struct SmartString*);
     void (*addChar) (struct SmartString*, char);
     struct SmartString (*copy) (struct SmartString*);
     struct SmartString (*subStr) (struct SmartString*, int, int);
@@ -26,6 +26,7 @@ typedef struct SmartString {
     struct SmartString (*allTrim) (struct SmartString*);
     int (*strPos) (struct SmartString*, int, char);
     struct SmartString (*trim) (struct SmartString*);
+    struct SmartString (*strReplace) (struct SmartString*, char*, char*);
 
     //destructor
     void (*destroy)(struct SmartString*);

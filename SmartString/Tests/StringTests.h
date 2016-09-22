@@ -21,5 +21,6 @@ void test_strPos();
 void test_allTrim();
 void test_strRPos();
 void test_trim();
+void test_strReplace();
 
 #endif //CCLASECOMPILER_STRINGTESTS_H

@@ -17,6 +17,7 @@ void testSmartStringFramework() {
     test_allTrim();
     test_strPos();
     test_trim();
+    test_strReplace();
 }
 
 void test_new_SmartString() {
@@ -250,4 +251,31 @@ void test_trim() {
     } else {
         printf("    Error\n");
     }
+
+    string.destroy(&string);
+    stringGood.destroy(&stringGood);
+    trimString.destroy(&trimString);
+}
+
+void test_strReplace() {
+    printf("* Test strReplace()...\n");
+    SmartString string = new_SmartStringFromString("simple It`s a simple test simple!simple");
+    SmartString stringGood = new_SmartStringFromString("rakamakafoo It`s a rakamakafoo test rakamakafoo!rakamakafoo");
+
+    SmartString searchWord = new_SmartStringFromString("simple");
+    SmartString replaceWord = new_SmartStringFromString("rakamakafoo");
+
+    SmartString response = string.strReplace(&string, searchWord.row, replaceWord.row);
+
+    if(response.equal(&response, &stringGood)) {
+        printf("    Ok\n");
+    } else {
+        printf("    Error\n");
+    }
+
+    string.destroy(&string);
+    stringGood.destroy(&stringGood);
+    searchWord.destroy(&searchWord);
+    replaceWord.destroy(&replaceWord);
+    response.destroy(&response);
 }
