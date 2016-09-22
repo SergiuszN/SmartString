@@ -1,6 +1,7 @@
 #include "String.h"
 
 void echo(SmartString* var) {
+    //print string into console
     printf("%s\n",var->row);
 }
 
@@ -18,10 +19,15 @@ void setString(SmartString* var, const char* string) {
 }
 
 size_t getLength(SmartString* var) {
+    //object oriented method to get
+    //length of string from
+    //SmartString object
     return var->length;
 }
 
 char getChar(int i, SmartString* var) {
+    //returned one char if exist
+    //and '\0' if not
     if (i < var->length) {
         return var->row[i];
     } else {
@@ -30,6 +36,8 @@ char getChar(int i, SmartString* var) {
 }
 
 char* getString(SmartString* var) {
+    //object oriented method to get
+    //String from SmartString object
     return var->row;
 }
 
@@ -43,6 +51,9 @@ void addString(SmartString* to, SmartString* from) {
     //copy value
     char copyFirstValue[newLength];
     strcpy(copyFirstValue, to->row);
+
+    //memory free
+    to->destroy(to);
 
     //concatenation row
     to->row = malloc(newLength);
@@ -68,10 +79,13 @@ void addChar(SmartString* to, char from) {
 }
 
 SmartString copy(SmartString* this) {
+    //return copy of this object
     return new_SmartStringFromString(this->row);
 }
 
 int equal(SmartString* left, SmartString* right) {
+    //return 1 if left and right string equal
+    //return 0 if left and right string not equal
     if (strcmp(left->row, right->row) == 0) {
         return 1;
     } else {
@@ -93,6 +107,7 @@ void destroy(SmartString* this) {
 //-------------------------------------------
 
 SmartString new_SmartString() {
+    //return new free object SmartString
     return new_SmartStringFromString("");
 }
 

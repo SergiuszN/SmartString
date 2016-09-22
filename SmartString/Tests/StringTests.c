@@ -23,6 +23,8 @@ void test_new_SmartString() {
     } else {
         printf("    Error\n");
     }
+
+    string.destroy(&string);
 }
 
 void test_new_SmartStringFromString() {
