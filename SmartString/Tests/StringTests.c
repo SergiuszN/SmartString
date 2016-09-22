@@ -17,7 +17,7 @@ void testSmartStringFramework() {
 
 void test_new_SmartString() {
     printf("* Test new_SmartString()...\n");
-    struct SmartString string = new_SmartString();
+    SmartString string = new_SmartString();
 
     if (strlen(string.row) == 0 && string.length == 0) {
         printf("    Ok\n");
@@ -30,7 +30,7 @@ void test_new_SmartString() {
 
 void test_new_SmartStringFromString() {
     printf("* Test new_SmartStringFromString()...\n");
-    struct SmartString string = new_SmartStringFromString("It`s a simple test!");
+    SmartString string = new_SmartStringFromString("It`s a simple test!");
 
     if (strcmp(string.row, "It`s a simple test!") == 0 && string.length == strlen("It`s a simple test!")) {
         printf("    Ok\n");
@@ -43,7 +43,7 @@ void test_new_SmartStringFromString() {
 
 void test_setString() {
     printf("* Test setString()...\n");
-    struct SmartString string = new_SmartString();
+    SmartString string = new_SmartString();
     string.setString(&string, "It`s a simple test!");
 
     if (strcmp(string.row, "It`s a simple test!") == 0 && string.length == strlen("It`s a simple test!")) {
@@ -58,7 +58,7 @@ void test_setString() {
 
 void test_getLength() {
     printf("* Test getLength()...\n");
-    struct SmartString string = new_SmartStringFromString("It`s a simple test!");
+    SmartString string = new_SmartStringFromString("It`s a simple test!");
 
     if (string.getLength(&string) == strlen("It`s a simple test!")) {
         printf("    Ok\n");
@@ -71,7 +71,7 @@ void test_getLength() {
 
 void test_getChar() {
     printf("* Test getChar()...\n");
-    struct SmartString string = new_SmartStringFromString("It`s a simple test!");
+    SmartString string = new_SmartStringFromString("It`s a simple test!");
 
     if (string.getChar(0, &string) != '\0' && string.getChar(string.length, &string) == '\0') {
         printf("    Ok\n");
@@ -84,7 +84,7 @@ void test_getChar() {
 
 void test_getString() {
     printf("* Test getString()...\n");
-    struct SmartString string = new_SmartStringFromString("It`s a simple test!");
+    SmartString string = new_SmartStringFromString("It`s a simple test!");
 
     if (strcmp(string.getString(&string),"It`s a simple test!") == 0) {
         printf("    Ok\n");
@@ -97,8 +97,8 @@ void test_getString() {
 
 void test_addString() {
     printf("* Test addString()...\n");
-    struct SmartString string = new_SmartStringFromString("It`s a simple test!");
-    struct SmartString addString = new_SmartStringFromString("Add String");
+    SmartString string = new_SmartStringFromString("It`s a simple test!");
+    SmartString addString = new_SmartStringFromString("Add String");
 
     string.addString(&string, &addString);
 
@@ -114,7 +114,7 @@ void test_addString() {
 
 void test_addChar() {
     printf("* Test addChar()...\n");
-    struct SmartString string = new_SmartStringFromString("It`s a simple test!");
+    SmartString string = new_SmartStringFromString("It`s a simple test!");
     char space = ' ';
 
     string.addChar(&string, space);
@@ -130,8 +130,8 @@ void test_addChar() {
 
 void test_copy() {
     printf("* Test copy()...\n");
-    struct SmartString string = new_SmartStringFromString("It`s a simple test!");
-    struct SmartString copyString = string.copy(&string);
+    SmartString string = new_SmartStringFromString("It`s a simple test!");
+    SmartString copyString = string.copy(&string);
 
     if (strcmp(string.row, copyString.row) == 0 && string.length == copyString.length) {
         printf("    Ok\n");
@@ -145,8 +145,8 @@ void test_copy() {
 
 void test_equal() {
     printf("* Test equal()...\n");
-    struct SmartString string = new_SmartStringFromString("It`s a simple test!");
-    struct SmartString copyString = new_SmartStringFromString("It`s a simple test!");
+    SmartString string = new_SmartStringFromString("It`s a simple test!");
+    SmartString copyString = new_SmartStringFromString("It`s a simple test!");
 
     if (string.equal(&string, &copyString)) {
         printf("    Ok\n");
@@ -160,13 +160,13 @@ void test_equal() {
 
 void test_subStr() {
     printf("* Test subStr()...\n");
-    struct SmartString string = new_SmartStringFromString("It`s a simple test!");
+    SmartString string = new_SmartStringFromString("It`s a simple test!");
 
     int startPosition = 7;
     int length = 6;
     int stopPosition = startPosition + length;
 
-    struct SmartString subString = string.subStr(&string, startPosition, stopPosition);
+    SmartString subString = string.subStr(&string, startPosition, stopPosition);
 
     if (strcmp(subString.row, "simple") == 0 && subString.length == 6) {
         printf("    Ok\n");
