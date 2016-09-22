@@ -154,7 +154,13 @@ int strRPos(SmartString* haystack, char* needle) {
 }
 
 int strPos(SmartString* this, int startPosition, char needle) {
+    //return position of the required symbol
+    //start from 'int startPosition'
+    //end in 'int endPosition'
+
+    //find how many symbols have string
     int endPosition = this->getLength(this);
+
     int currentPosition = -1;
 
     for (int i=startPosition; i<endPosition ; i++) {
@@ -162,9 +168,32 @@ int strPos(SmartString* this, int startPosition, char needle) {
             currentPosition = i;
             break;
         }
-
     }
+
     return currentPosition;
+}
+
+SmartString trim(SmartString* this) {
+    //remove spaces, tabs and carry of a line, then leave one space
+    int endPosition = this->getLength(this);
+    SmartString newRow = new_SmartString();
+
+    //remove tabs and carry of a line
+    for (int i = 0; i < endPosition; i++) {
+        if(this->row[i] == '\n' || this->row[i] == '\t') {
+            this->row[i] = ' ';
+        }
+    }
+    //remove spaces
+    for (int i = 0; i < endPosition-1; i++) {
+        if(this->row[i] != ' ' || this->row[i+1] != ' ') {
+            newRow.addChar(&newRow, this->row[i]);
+        }
+    }
+
+    newRow.addChar(&newRow, this->row[endPosition-1]);
+
+    return newRow;
 }
 
 
@@ -215,6 +244,7 @@ SmartString new_SmartStringFromString(const char* var) {
     obj.strRPos = &strRPos;
     obj.allTrim = &allTrim;
     obj.strPos = &strPos;
+    obj.trim = &trim;
 
     //end-------------------
     return obj;

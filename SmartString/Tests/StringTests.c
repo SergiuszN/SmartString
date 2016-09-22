@@ -16,6 +16,7 @@ void testSmartStringFramework() {
     test_strRPos();
     test_allTrim();
     test_strPos();
+    test_trim();
 }
 
 void test_new_SmartString() {
@@ -235,4 +236,18 @@ void test_strPos() {
     }
 
     string.destroy(&string);
+}
+}
+void test_trim() {
+    printf("* Test trim()...\n");
+    SmartString string = new_SmartStringFromString("   It`s\n a          simple\t test!     ");
+    SmartString stringGood = new_SmartStringFromString(" It`s a simple test! ");
+
+    SmartString trimString = string.trim(&string);
+
+    if(trimString.equal(&trimString, &stringGood)) {
+        printf("    Ok\n");
+    } else {
+        printf("    Error\n");
+    }
 }
