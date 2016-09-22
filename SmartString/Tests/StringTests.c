@@ -237,7 +237,7 @@ void test_strPos() {
 
     string.destroy(&string);
 }
-}
+
 void test_trim() {
     printf("* Test trim()...\n");
     SmartString string = new_SmartStringFromString("   It`s\n a          simple\t test!     ");
