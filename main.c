@@ -1,11 +1,20 @@
 #include <stdio.h>
 #include "SmartString/SmartString.h"
-#include "SmartString/Tests/StringTests.h"
+#include "Service/Service.h"
+//#include "SmartString/Tests/StringTests.h"
 
 int main() {
+    Service service = new_Service();
 
-    testSmartStringFramework();
+    SmartString file = service.fileReadAllLine("../JavaExamples/ex1.java");
+    file.echo(&file);
 
+    getchar();
+    return 0;
+}
+
+//    functions for test SmartString Framework
+//    testSmartStringFramework();
 //    * memory test--------
 //    int i=0;
 //    while (i<1000) {
@@ -13,8 +22,3 @@ int main() {
 //        system("cls");
 //    }
 //    * ------------------
-
-
-    getchar();
-    return 0;
-}
