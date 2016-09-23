@@ -9,6 +9,16 @@ typedef struct StringArrayBlock {
     struct SmartString value;
 } StringArrayBlock;
 
+typedef struct SmartStringArray {
+    // variables
+    int length;
+    int position;
+    struct StringArrayBlock* array;
+
+    // functions
+    void (*addString) (struct SmartStringArray*, struct SmartString*);
+    struct SmartString (*getString) (struct SmartStringArray*, int);
+} SmartStringArray;
 
 
 #endif //CCLASECOMPILER_STRINGARRAY_H
