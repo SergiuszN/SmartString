@@ -4,8 +4,8 @@
 #include "../String/String.h"
 
 typedef struct StringArrayBlock {
-    struct SmartString *left;
-    struct SmartString *right;
+    struct StringArrayBlock *left;
+    struct StringArrayBlock *right;
     struct SmartString value;
 } StringArrayBlock;
 
@@ -20,5 +20,7 @@ typedef struct SmartStringArray {
     struct SmartString (*getString) (struct SmartStringArray*, int);
 } SmartStringArray;
 
+SmartStringArray new_SmartStringArray();
+StringArrayBlock new_StringArrayBlock(StringArrayBlock*, SmartString*);
 
 #endif //CCLASECOMPILER_STRINGARRAY_H
