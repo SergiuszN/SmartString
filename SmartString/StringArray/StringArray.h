@@ -25,6 +25,7 @@ typedef struct SmartStringArray {
     // functions
     void (*add)(struct SmartStringArray*, struct SmartString);
     SmartString (*get)(struct SmartStringArray*, int);
+    int (*find)(struct SmartStringArray*, SmartString*);
     void (*destroy) (struct SmartStringArray*);
 
 } SmartStringArray;

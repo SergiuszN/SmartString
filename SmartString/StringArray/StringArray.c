@@ -89,6 +89,29 @@ void destroySmartStringArray(SmartStringArray* this) {
     this->head->destroy(this->head, this->length);
 }
 
+int findSmartStringArray(SmartStringArray* this, SmartString* row) {
+    // set false in findPosition and
+    // define pointer to SmartStringArrayBlock
+    int findPosition = -1;
+    SmartStringArrayBlock* block;
+
+    // test all string in array
+    for (int key = 0; key < this->length; key++) {
+
+        // get block with index 'key'
+        block = this->head->getBlock(this->head, key);
+
+        // if SmartString in this block and 'row' equal
+        // change findPosition and break
+        if (block->field.equal(&block->field, row)) {
+            findPosition = key;
+            break;
+        }
+    }
+
+    return findPosition;
+}
+
 //-------------------------------------------
 //              Constructor
 //-------------------------------------------
@@ -125,6 +148,7 @@ SmartStringArray new_SmartStringArray(SmartString value) {
     obj.add = &addToSmartStringArray;
     obj.get = &getToSmartStringArray;
     obj.destroy = &destroySmartStringArray;
+    obj.find = &findSmartStringArray;
 
     return obj;
 }
