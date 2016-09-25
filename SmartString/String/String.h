@@ -28,7 +28,7 @@ typedef struct SmartString {
     struct SmartString (*trim) (struct SmartString*);
     struct SmartString (*strReplace) (struct SmartString*, char*, char*);
     struct SmartString (*getBlock) (struct SmartString*, char, char, int);
-    struct SmartString (*deleteAllBetween) (struct SmartString*,struct SmartString*,struct SmartString*);
+    struct SmartString (*deleteAllBetween) (struct SmartString*, char*, char*);
 
     //destructor
     void (*destroy)(struct SmartString*);

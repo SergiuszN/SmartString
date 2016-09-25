@@ -288,7 +288,10 @@ SmartString getBlock(SmartString* this, char startChar, char stopChar, int start
     return textWithOutBracket;
 }
 
-SmartString deleteAllBetween(SmartString* this, SmartString* searchString, SmartString* breakString) {
+SmartString deleteAllBetween(SmartString* this, char* char_searchString, char* char_breakString) {
+    SmartString searchString = new_SmartStringFromString(char_searchString);
+    SmartString breakString = new_SmartStringFromString(char_breakString);
+
     // create base newString from base row
     SmartString newString = this->copy(this);
 
@@ -297,7 +300,7 @@ SmartString deleteAllBetween(SmartString* this, SmartString* searchString, Smart
     SmartString rightString = new_SmartString();
 
     // set base parameters
-    int breakWordLength = breakString->length;
+    int breakWordLength = breakString.length;
     int nullPosition = -1;
     int searchStringPosition;
     int breakStringPosition;
@@ -305,8 +308,8 @@ SmartString deleteAllBetween(SmartString* this, SmartString* searchString, Smart
     // replace words while search words is set
     do {
         // find new position search row in base row
-        searchStringPosition = newString.strRPos(&newString, searchString->getString(searchString));
-        breakStringPosition = newString.strRPos(&newString, breakString->getString(breakString));
+        searchStringPosition = newString.strRPos(&newString, searchString.getString(&searchString));
+        breakStringPosition = newString.strRPos(&newString, breakString.getString(&breakString));
 
         // if search word find
         if (searchStringPosition != nullPosition) {
@@ -334,6 +337,8 @@ SmartString deleteAllBetween(SmartString* this, SmartString* searchString, Smart
     // free memory
     leftString.destroy(&leftString);
     rightString.destroy(&rightString);
+    searchString.destroy(&searchString);
+    breakString.destroy(&breakString);
 
     // set new value
     return newString;
