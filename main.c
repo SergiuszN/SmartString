@@ -1,14 +1,24 @@
 #include <stdio.h>
 #include "SmartString/SmartString.h"
 #include "Service/Service.h"
+#include "Interpreter/Interpreter.h"
 #include "SmartString/Tests/StringTests.h"
 
 int main() {
+    // define objects classes helpers
     Service service = new_Service();
+    JavaClass classInterpreter = new_JavaClass();
 
+    // read java source code
     SmartString file = service.fileReadAllText("../JavaExamples/ex3.java");
-    file.echo(&file);
+
+    // delete comments from code
     service.deleteAllComments(&file);
+
+    // interpret classes
+    classInterpreter.classMacro(&file);
+
+    printf("--------------------------------------\n");
     file.echo(&file);
 
 //    testSmartStringFramework();

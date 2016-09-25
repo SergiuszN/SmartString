@@ -10,5 +10,6 @@ set(SOURCE_FILES
         SmartString/StringArray/StringArray.c
         SmartString/Tests/StringTests.c
         Service/Service.c
+        Interpreter/JavaClass/JavaClass.c
         )
 add_executable(cClaseCompiler ${SOURCE_FILES})
