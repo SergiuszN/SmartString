@@ -3,15 +3,15 @@
 #include "Service/Service.h"
 #include "SmartString/Tests/StringTests.h"
 
-void test_SmartStringArray();
-
 int main() {
-//    Service service = new_Service();
-//
-//    SmartString file = service.fileReadAllLine("../JavaExamples/ex1.java");
-//    file.echo(&file);
+    Service service = new_Service();
 
-    testSmartStringFramework();
+    SmartString file = service.fileReadAllText("../JavaExamples/ex3.java");
+    file.echo(&file);
+    service.deleteAllComments(&file);
+    file.echo(&file);
+
+//    testSmartStringFramework();
 
     getchar();
     return 0;

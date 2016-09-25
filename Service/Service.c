@@ -1,6 +1,6 @@
 #include "Service.h"
 
-SmartString fileReadAllLine(char* fileName) {
+SmartString fileReadAllText(char* fileName) {
     // function read all file
     // and save into object SmartString
 
@@ -30,6 +30,18 @@ SmartString fileReadAllLine(char* fileName) {
     return allFile;
 }
 
+void deleteAllComments(SmartString* text) {
+
+    SmartString clearTextFromFirstTypeCommit = text->deleteAllBetween(text, "/*", "*/");
+    SmartString clearTextFromSecondTypeCommit = clearTextFromFirstTypeCommit.deleteAllBetween(&clearTextFromFirstTypeCommit, "//", "\n");
+
+    // set new value
+    text->setString(text, clearTextFromSecondTypeCommit.getString(&clearTextFromSecondTypeCommit));
+
+    clearTextFromFirstTypeCommit.destroy(&clearTextFromFirstTypeCommit);
+    clearTextFromSecondTypeCommit.destroy(&clearTextFromSecondTypeCommit);
+}
+
 
 //-------------------------------------------
 //              Constructor
@@ -40,7 +52,8 @@ Service new_Service() {
     struct Service obj;
 
     //connection all function
-    obj.fileReadAllLine = &fileReadAllLine;
+    obj.fileReadAllText = &fileReadAllText;
+    obj.deleteAllComments = &deleteAllComments;
 
     //end-------------------
     return obj;

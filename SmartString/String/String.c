@@ -309,10 +309,22 @@ SmartString deleteAllBetween(SmartString* this, char* char_searchString, char* c
     do {
         // find new position search row in base row
         searchStringPosition = newString.strRPos(&newString, searchString.getString(&searchString));
-        breakStringPosition = newString.strRPos(&newString, breakString.getString(&breakString));
+
+        if (breakWordLength > 1) {
+            // if breakString is string find in text from 0 pos
+            breakStringPosition = newString.strRPos(&newString, breakString.getString(&breakString));
+        } else {
+            // if breakString is char fint text from searchStringPosition pos
+            breakStringPosition = newString.strPos(&newString, searchStringPosition, breakString.getChar(0, &breakString))-1;
+        }
 
         // if search word find
         if (searchStringPosition != nullPosition) {
+            // if start point set and stop point not
+            if (searchStringPosition > 0 && breakStringPosition < 0) {
+                breakStringPosition = newString.length - 1;
+            }
+
             // clear left adn right row
             leftString.destroy(&leftString);
             rightString.destroy(&rightString);

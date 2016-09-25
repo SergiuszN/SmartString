@@ -10,7 +10,8 @@ typedef struct Service {
     //variables
 
     //functions
-    struct SmartString (*fileReadAllLine) (char* fileName);
+    struct SmartString (*fileReadAllText) (char* fileName);
+    void (*deleteAllComments) (SmartString*);
 } Service;
 
 Service new_Service();
