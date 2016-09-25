@@ -2,6 +2,14 @@
 #include "../SmartString.h";
 
 void testSmartStringFramework() {
+    printf("*** Test SmartString Class...\n");
+    test_SmartString();
+
+    printf("*** Test SmartStringArray Class...\n");
+    test_SmartStringArray();
+}
+
+void test_SmartString() {
     test_new_SmartString();
     test_new_SmartStringFromString();
     test_setString();
@@ -19,6 +27,12 @@ void testSmartStringFramework() {
     test_trim();
     test_strReplace();
     test_getBlock();
+}
+
+void test_SmartStringArray() {
+    test_add();
+    test_get();
+    test_find();
 }
 
 void test_new_SmartString() {
@@ -297,4 +311,75 @@ void test_getBlock() {
     string.destroy(&string);
     blockClass.destroy(&blockClass);
     blockClassValue.destroy(&blockClassValue);
+}
+
+void test_add() {
+    printf("* Test add()...\n");
+    SmartString row1 = new_SmartStringFromString("row1");
+    SmartString row2 = new_SmartStringFromString("row2");
+
+    SmartStringArray array = new_SmartStringArray(row1);
+    array.add(&array, row2);
+
+    if(array.length == 2) {
+        printf("    Ok\n");
+    } else {
+        printf("    Error\n");
+    }
+
+    row1.destroy(&row1);
+    row2.destroy(&row2);
+    array.destroy(&array);
+}
+
+void test_get() {
+    printf("* Test get()...\n");
+    SmartString row1 = new_SmartStringFromString("row1");
+    SmartString row2 = new_SmartStringFromString("row2");
+
+    SmartStringArray array = new_SmartStringArray(row1);
+    array.add(&array, row2);
+
+    SmartString response = array.get(&array, 1);
+
+    if(row2.equal(&row2, &response)) {
+        printf("    Ok\n");
+    } else {
+        printf("    Error\n");
+    }
+
+    row1.destroy(&row1);
+    row2.destroy(&row2);
+    response.destroy(&response);
+    array.destroy(&array);
+}
+
+void test_find() {
+    printf("* Test find()...\n");
+    SmartString row1 = new_SmartStringFromString("row1");
+    SmartString row2 = new_SmartStringFromString("row2");
+    SmartString row3 = new_SmartStringFromString("row3");
+    SmartString row5 = new_SmartStringFromString("row5");
+
+    SmartStringArray array = new_SmartStringArray(row1);
+    array.add(&array, row2);
+    array.add(&array, row3);
+
+    int positionRow3 = array.find(&array, &row3);
+    int positionRow5 = array.find(&array, &row5);
+
+    int notFind = -1;
+    int row3Find = 2;
+
+    if(positionRow3 == row3Find && positionRow5 == notFind) {
+        printf("    Ok\n");
+    } else {
+        printf("    Error\n");
+    }
+
+    row1.destroy(&row1);
+    row2.destroy(&row2);
+    row3.destroy(&row3);
+    row5.destroy(&row5);
+    array.destroy(&array);
 }
