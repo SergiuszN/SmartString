@@ -3,24 +3,34 @@
 
 #include "../String/String.h"
 
-typedef struct StringArrayBlock {
-    struct StringArrayBlock *left;
-    struct StringArrayBlock *right;
-    struct SmartString value;
-} StringArrayBlock;
+typedef struct SmartStringArrayBlock {
+    // variables
+    struct SmartString field;
+    struct SmartStringArrayBlock *next;
+    struct SmartStringArrayBlock *prev;
+
+    // functions
+    struct SmartStringArrayBlock* (*pushBack) (struct SmartStringArrayBlock*, struct SmartString);
+    struct SmartStringArrayBlock* (*getBlock) (struct SmartStringArrayBlock*, int);
+    void (*destroy) (struct SmartStringArrayBlock*, int);
+
+} SmartStringArrayBlock;
 
 typedef struct SmartStringArray {
     // variables
     int length;
-    int position;
-    struct StringArrayBlock* array;
+    struct SmartStringArrayBlock *head;
+    struct SmartStringArrayBlock *current;
 
     // functions
-    void (*addString) (struct SmartStringArray*, struct SmartString*);
-    struct SmartString (*getString) (struct SmartStringArray*, int);
+    void (*add)(struct SmartStringArray*, struct SmartString);
+    SmartString (*get)(struct SmartStringArray*, int);
+    void (*destroy) (struct SmartStringArray*);
+
 } SmartStringArray;
 
-SmartStringArray new_SmartStringArray();
-StringArrayBlock new_StringArrayBlock(StringArrayBlock*, SmartString*);
+
+SmartStringArrayBlock* new_SmartStringArrayBlock(struct SmartString);
+SmartStringArray new_SmartStringArray(struct SmartString);
 
 #endif //CCLASECOMPILER_STRINGARRAY_H

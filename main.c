@@ -3,26 +3,35 @@
 #include "Service/Service.h"
 //#include "SmartString/Tests/StringTests.h"
 
+void test_SmartStringArray();
+
 int main() {
 //    Service service = new_Service();
 //
 //    SmartString file = service.fileReadAllLine("../JavaExamples/ex1.java");
 //    file.echo(&file);
 
-    SmartString row1 = new_SmartStringFromString("test1");
-    SmartString row2 = new_SmartStringFromString("test2");
-    SmartString row3 = new_SmartStringFromString("test3");
-
-    SmartStringArray test = new_SmartStringArray();
-    test.addString(&test, &row1);
-    test.addString(&test, &row2);
-    test.addString(&test, &row3);
-
-    SmartString res = test.getString(&test, 0);
-    res.echo(&res);
+    test_SmartStringArray();
 
     getchar();
     return 0;
+}
+
+void test_SmartStringArray() {
+    SmartString row1 = new_SmartStringFromString("123");
+    SmartString row2 = new_SmartStringFromString("123");
+    SmartString row3 = new_SmartStringFromString("123");
+
+    SmartStringArray test = new_SmartStringArray(row1);
+    test.add(&test, row2);
+    test.add(&test, row3);
+
+    SmartString res = new_SmartString();
+    res.destroy(&res); res = test.get(&test, 0); res.echo(&res);
+    res.destroy(&res); res = test.get(&test, 1); res.echo(&res);
+    res.destroy(&res); res = test.get(&test, 2); res.echo(&res);
+
+    test.destroy(&test);
 }
 
 //    functions for test SmartString Framework
