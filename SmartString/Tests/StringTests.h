@@ -28,6 +28,7 @@ void test_strRPos();
 void test_trim();
 void test_strReplace();
 void test_getBlock();
+void test_deleteAllBetween();
 // ---- test SmartStringArray
 void test_SmartStringArray();
 void test_add();

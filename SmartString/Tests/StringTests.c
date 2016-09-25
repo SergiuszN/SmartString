@@ -27,6 +27,7 @@ void test_SmartString() {
     test_trim();
     test_strReplace();
     test_getBlock();
+    test_deleteAllBetween();
 }
 
 void test_SmartStringArray() {
@@ -311,6 +312,30 @@ void test_getBlock() {
     string.destroy(&string);
     blockClass.destroy(&blockClass);
     blockClassValue.destroy(&blockClassValue);
+}
+
+void test_deleteAllBetween() {
+    printf("* Test deleteAllBetween()...\n");
+    SmartString string = new_SmartStringFromString("Class main { if() /*{value {asdh*/ lasdj {asdasd  }/*laksjd }1} val*/ue 2 }");
+
+    SmartString start = new_SmartStringFromString("/*");
+    SmartString stop = new_SmartStringFromString("*/");
+
+    SmartString clearString = string.deleteAllBetween(&string, &start, &stop);
+
+    SmartString rightClearString = new_SmartStringFromString("Class main { if()  lasdj {asdasd  }ue 2 }");
+
+    if(clearString.equal(&clearString, &rightClearString)) {
+        printf("    Ok\n");
+    } else {
+        printf("    Error\n");
+    }
+
+    string.destroy(&string);
+    start.destroy(&start);
+    stop.destroy(&stop);
+    clearString.destroy(&clearString);
+    rightClearString.destroy(&rightClearString);
 }
 
 void test_add() {

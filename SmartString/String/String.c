@@ -288,6 +288,57 @@ SmartString getBlock(SmartString* this, char startChar, char stopChar, int start
     return textWithOutBracket;
 }
 
+SmartString deleteAllBetween(SmartString* this, SmartString* searchString, SmartString* breakString) {
+    // create base newString from base row
+    SmartString newString = this->copy(this);
+
+    // create free leftString and rightString
+    SmartString leftString = new_SmartString();
+    SmartString rightString = new_SmartString();
+
+    // set base parameters
+    int breakWordLength = breakString->length;
+    int nullPosition = -1;
+    int searchStringPosition;
+    int breakStringPosition;
+
+    // replace words while search words is set
+    do {
+        // find new position search row in base row
+        searchStringPosition = newString.strRPos(&newString, searchString->getString(searchString));
+        breakStringPosition = newString.strRPos(&newString, breakString->getString(breakString));
+
+        // if search word find
+        if (searchStringPosition != nullPosition) {
+            // clear left adn right row
+            leftString.destroy(&leftString);
+            rightString.destroy(&rightString);
+
+            // set new left and right row
+            leftString = newString.subStr(&newString, 0, searchStringPosition);
+            rightString = newString.subStr(&newString, breakStringPosition + breakWordLength, -1);
+
+            // clear base row
+            newString.destroy(&newString);
+            newString = new_SmartString();
+
+            // set new base row
+            newString.addString(&newString, &leftString);
+            newString.addString(&newString, &rightString);
+        } else {
+            // no more search keyword
+            break;
+        }
+    } while (1); // break point implemented in do
+
+    // free memory
+    leftString.destroy(&leftString);
+    rightString.destroy(&rightString);
+
+    // set new value
+    return newString;
+}
+
 
 //-------------------------------------------
 //              Destructor
@@ -339,6 +390,7 @@ SmartString new_SmartStringFromString(const char* var) {
     obj.trim = &trim;
     obj.strReplace = &strReplace;
     obj.getBlock = &getBlock;
+    obj.deleteAllBetween = &deleteAllBetween;
 
     //end-------------------
     return obj;
