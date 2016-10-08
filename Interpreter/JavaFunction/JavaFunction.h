@@ -9,7 +9,10 @@ typedef struct JavaFunction {
     //variables
 
     //functions
-    void (*functionMacro) (struct SmartString*);
+    void (*mainFunctionMacro) (struct SmartString*);
+    struct SmartStringArray (*functionTokenDelimiter) (struct SmartString*);
+    void (*run) (struct JavaFunction*, struct SmartString*);
+
 } JavaFunction;
 
 JavaFunction new_JavaFunction();

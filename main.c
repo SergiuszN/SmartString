@@ -8,6 +8,7 @@ int main() {
     // define objects classes helpers
     Service service = new_Service();
     JavaClass classInterpreter = new_JavaClass();
+    JavaFunction functionInterpreter = new_JavaFunction();
 
     // read java source code
     SmartString file = service.fileReadAllText("../JavaExamples/ex3.java");
@@ -18,8 +19,11 @@ int main() {
     // interpret classes
     classInterpreter.classMacro(&file);
 
-    printf("--------------------------------------\n");
-    file.echo(&file);
+    // interpret functions
+    functionInterpreter.run(&functionInterpreter, &file);
+
+    //printf("--------------------------------------\n");
+    //file.echo(&file);
 
 //    testSmartStringFramework();
 

@@ -173,6 +173,26 @@ int strPos(SmartString* this, int startPosition, char needle) {
     return currentPosition;
 }
 
+int revertStrPos(SmartString* this, int startPosition, char needle) {
+    //return position of the required symbol
+    //start from 'int startPosition'
+    //end in 'int endPosition'
+
+    //find how many symbols have string
+    int endPosition = 0;
+
+    int currentPosition = -1;
+
+    for (int i=startPosition; i>=endPosition ; i--) {
+        if (this->row[i] == needle) {
+            currentPosition = i;
+            break;
+        }
+    }
+
+    return currentPosition;
+}
+
 SmartString trim(SmartString* this) {
     //remove spaces, tabs and carry of a line, then leave one space
     int endPosition = this->getLength(this);
@@ -404,6 +424,7 @@ SmartString new_SmartStringFromString(const char* var) {
     obj.strRPos = &strRPos;
     obj.allTrim = &allTrim;
     obj.strPos = &strPos;
+    obj.revertStrPos = &revertStrPos;
     obj.trim = &trim;
     obj.strReplace = &strReplace;
     obj.getBlock = &getBlock;

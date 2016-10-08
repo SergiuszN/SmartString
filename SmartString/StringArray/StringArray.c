@@ -122,7 +122,7 @@ SmartStringArrayBlock* new_SmartStringArrayBlock(SmartString value) {
     SmartStringArrayBlock* obj = (SmartStringArrayBlock*) malloc(sizeof(SmartStringArrayBlock));
 
     // startup value set
-    obj->field = value;
+    obj->field = new_SmartStringFromString(value.row);
     obj->next = NULL;
     obj->prev = NULL;
 
