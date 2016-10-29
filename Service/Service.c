@@ -15,7 +15,7 @@ SmartString fileReadAllText(char* fileName) {
     // if file not defined
     // print error end return void SmartString
     if (!in) {
-        printf("Error! File: '%s' not finded!\n", fileName);
+        printf("Error! File: '%s' not founded!\n", fileName);
         return new_SmartString();
     }
 

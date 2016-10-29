@@ -1,4 +1,4 @@
-cmake_minimum_required(VERSION 3.6)
+cmake_minimum_required(VERSION 3.5)
 project(cClaseCompiler)
 
 set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -std=c99")
@@ -10,7 +10,5 @@ set(SOURCE_FILES
         SmartString/StringArray/StringArray.c
         SmartString/Tests/StringTests.c
         Service/Service.c
-        Interpreter/JavaClass/JavaClass.c
-        Interpreter/JavaFunction/JavaFunction.c
         )
 add_executable(cClaseCompiler ${SOURCE_FILES})

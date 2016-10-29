@@ -1,154 +1,132 @@
 #include "StringArray.h"
 
 //-------------------------------------------
-//          SmartStringArrayBlock
-//                functions
-//-------------------------------------------
-
-SmartStringArrayBlock* pushBack(SmartStringArrayBlock* this, SmartString value) {
-
-    // add new element in to back
-
-    SmartStringArrayBlock *newBlock = new_SmartStringArrayBlock(value);
-    SmartStringArrayBlock *nextBlock = this->next;
-
-    this->next = newBlock;
-
-    newBlock->prev = this;
-    newBlock->field = value;
-    newBlock->next = nextBlock;
-
-
-    if (nextBlock != NULL) {
-        nextBlock->prev = newBlock;
-    }
-
-    return(newBlock);
-}
-
-SmartStringArrayBlock* getBlockByKey(SmartStringArrayBlock* this, int key) {
-    // function return element with key number
-    // or NULL if not isset
-
-    SmartStringArrayBlock *tempArray = this;
-    int count = 0;
-
-    while (tempArray) {
-
-        if (key == count) {
-            break;
-        }
-
-        tempArray = tempArray->next;
-        count += 1;
-    }
-
-    return tempArray;
-}
-
-void destroySmartStringArrayBlock(SmartStringArrayBlock* this, int length) {
-    // iterate on all SmartStringArrayBlock and delete SmartString
-    // after delete SmartStringArrayBlock pointer
-
-    SmartStringArrayBlock *tempArray = this;
-    SmartStringArrayBlock *nextArray;
-    int count = 0;
-
-    while (count < length) {
-        nextArray = tempArray->next;
-
-        (tempArray->field).destroy(&(tempArray->field));
-        free(tempArray);
-
-        tempArray = nextArray;
-        count += 1;
-    }
-}
-
-//-------------------------------------------
 //            SmartStringArray
 //                functions
 //-------------------------------------------
 
-void addToSmartStringArray(SmartStringArray* this, SmartString value) {
-    // use SmartStringArrayBlock pushBack function
-    this->current = this->current->pushBack(this->current, value);
-    // increment length
+void ssa_push(SmartStringArray* this, SmartString* text) {
+    SmartStringArrayNode* prevNode = this->getNode(this, this->length - 1);
+    SmartStringArrayNode* newNode = new_SmartStringArrayNode(text);
+
+    if (this->length == 0) {
+        this->head = newNode;
+    } else {
+        prevNode->next = newNode;
+        newNode->prev = prevNode;
+    }
+
     this->length += 1;
 }
 
-SmartString getToSmartStringArray(SmartStringArray* this, int key) {
-    // get SmartStringArrayBlock with key == 'key'
-    SmartStringArrayBlock* block = this->head->getBlock(this->head, key);
-    // return SmartString object
-    return block->field;
+SmartStringArrayNode* ssa_getNode(SmartStringArray* this, int position) {
+    SmartStringArrayNode* pointer = this->head;
+
+    for (int i=0; i<position; i++) {
+        pointer = pointer->next;
+    }
+
+    return pointer;
 }
 
-void destroySmartStringArray(SmartStringArray* this) {
-    // use destructor SmartStringArrayBlock class
-    this->head->destroy(this->head, this->length);
+SmartString* ssa_get(SmartStringArray* this, int position) {
+    SmartStringArrayNode* node = this->getNode(this, position);
+    return node->value;
 }
 
-int findSmartStringArray(SmartStringArray* this, SmartString* row) {
-    // set false in findPosition and
-    // define pointer to SmartStringArrayBlock
-    int findPosition = -1;
-    SmartStringArrayBlock* block;
+void ssa_destroy(SmartStringArray* this) {
+    SmartStringArrayNode* node;
+    int length = (this->length-1 < 0) ? 0 : this->length-1;
 
-    // test all string in array
-    for (int key = 0; key < this->length; key++) {
+    for (int i=length;i>=0;i--) {
+        node = this->getNode(this, i);
+        free(node->value->row);
+        free(node->value);
+        free(node);
+        node->value = NULL;
+        node->prev = NULL;
+        node->next = NULL;
+    }
 
-        // get block with index 'key'
-        block = this->head->getBlock(this->head, key);
+    this->head = NULL;
+    this->destroy = NULL;
+    this->get = NULL;
+    this->getNode = NULL;
+    this->length = NULL;
+    this->push = NULL;
+    this->find = NULL;
+    this->findFrom = NULL;
+}
 
-        // if SmartString in this block and 'row' equal
-        // change findPosition and break
-        if (block->field.equal(&block->field, row)) {
-            findPosition = key;
-            break;
+int ssa_find(SmartStringArray* this, SmartString* find) {
+    SmartStringArrayNode *node;
+    int position = -1;
+
+    for (int i=0; i<this->length; i++) {
+        node = this->getNode(this, i);
+        if (find->equal(find, node->value)) {
+            position = i;
         }
     }
 
-    return findPosition;
+    return position;
+}
+
+int ssa_findFrom(SmartStringArray* this, SmartString* find, int startPosition) {
+    SmartStringArrayNode *node;
+    int position = -1;
+
+    if (startPosition >= this->length) {
+        return position;
+    }
+
+    for (int i=startPosition; i<this->length; i++) {
+        node = this->getNode(this, i);
+        if (find->equal(find, node->value)) {
+            position = i;
+        }
+    }
+
+    return position;
 }
 
 //-------------------------------------------
 //              Constructor
 //-------------------------------------------
 
-SmartStringArrayBlock* new_SmartStringArrayBlock(SmartString value) {
-
+SmartStringArray new_SmartStringArray() {
     // memory set
-    SmartStringArrayBlock* obj = (SmartStringArrayBlock*) malloc(sizeof(SmartStringArrayBlock));
+    SmartStringArray obj;
+    SmartString emptyString = new_SmartString();
 
     // startup value set
-    obj->field = new_SmartStringFromString(value.row);
-    obj->next = NULL;
-    obj->prev = NULL;
+    obj.head = new_SmartStringArrayNode(&emptyString);
+    obj.length = 0;
 
     //connection all function
-    obj->pushBack = &pushBack;
-    obj->getBlock = &getBlockByKey;
-    obj->destroy = &destroySmartStringArrayBlock;
+    obj.push = &ssa_push;
+    obj.getNode = &ssa_getNode;
+    obj.get = &ssa_get;
+    obj.destroy = &ssa_destroy;
+    obj.find = &ssa_find;
+    obj.findFrom = &ssa_findFrom;
 
-    //end-------------------
+    emptyString.destroy(&emptyString);
     return obj;
 }
 
-SmartStringArray new_SmartStringArray(SmartString value) {
-    // memory set
-    SmartStringArray obj;
+SmartStringArrayNode* new_SmartStringArrayNode(SmartString* text) {
+    // create new value
+    SmartStringArrayNode* obj = (SmartStringArrayNode*) malloc(sizeof(SmartStringArrayNode));
 
-    // startup value set
-    obj.head = new_SmartStringArrayBlock(value);
-    obj.current = obj.head;
-    obj.length = 1;
+    // set empty row
+    obj->value = (SmartString*) malloc(sizeof(SmartString));
+    obj->value = new_SmartStringPointer(obj->value);
+    obj->value->setString(obj->value, text->getString(text));
 
-    //connection all function
-    obj.add = &addToSmartStringArray;
-    obj.get = &getToSmartStringArray;
-    obj.destroy = &destroySmartStringArray;
-    obj.find = &findSmartStringArray;
+    // default pointer to prev next
+    obj->prev = NULL;
+    obj->next = NULL;
 
     return obj;
 }

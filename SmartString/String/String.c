@@ -433,3 +433,35 @@ SmartString new_SmartStringFromString(const char* var) {
     //end-------------------
     return obj;
 }
+
+SmartString* new_SmartStringPointer(SmartString* obj) {
+    //set length
+    obj->length = 0;
+
+    //set row
+    obj->row = NULL;
+
+    //connection all function
+    obj->echo = &echo;
+    obj->getLength = &getLength;
+    obj->getChar = &getChar;
+    obj->getString = &getString;
+    obj->addString = &addString;
+    obj->addChar = &addChar;
+    obj->setString = &setString;
+    obj->destroy = &destroy;
+    obj->copy = &copy;
+    obj->equal = &equal;
+    obj->subStr = &subStr;
+    obj->strRPos = &strRPos;
+    obj->allTrim = &allTrim;
+    obj->strPos = &strPos;
+    obj->revertStrPos = &revertStrPos;
+    obj->trim = &trim;
+    obj->strReplace = &strReplace;
+    obj->getBlock = &getBlock;
+    obj->deleteAllBetween = &deleteAllBetween;
+
+    //end-------------------
+    return obj;
+}

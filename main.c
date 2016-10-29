@@ -1,10 +1,25 @@
 #include <stdio.h>
 #include "SmartString/SmartString.h"
 #include "Service/Service.h"
-#include "Interpreter/Interpreter.h"
 #include "SmartString/Tests/StringTests.h"
 
+void test();
+
 int main() {
+
+    for (int i=0;i<200000;i++) {
+        test();
+        if (i%1000 == 0) {
+            printf("1000!");
+        }
+    }
+
+    printf("close\n");
+    getchar();
+    return 0;
+
+
+    /*
     // define objects classes helpers
     Service service = new_Service();
     JavaClass classInterpreter = new_JavaClass();
@@ -20,15 +35,23 @@ int main() {
     classInterpreter.classMacro(&file);
 
     // interpret functions
-    functionInterpreter.run(&functionInterpreter, &file);
+    functionInterpreter.run(&functionInterpreter, &file);*/
 
     //printf("--------------------------------------\n");
     //file.echo(&file);
 
 //    testSmartStringFramework();
 
-    getchar();
-    return 0;
+
+}
+
+void test() {
+    SmartStringArray array = new_SmartStringArray();
+    SmartString val = new_SmartStringFromString("wahaha1");
+    //array.push(&array, &val);
+
+    val.destroy(&val);
+    array.destroy(&array);
 }
 
 //    functions for test SmartString Framework

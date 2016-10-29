@@ -37,5 +37,6 @@ typedef struct SmartString {
 
 SmartString new_SmartString();
 SmartString new_SmartStringFromString(const char*);
+SmartString* new_SmartStringPointer(struct SmartString*);
 
 #endif //CCLASECOMPILER_STRING_H

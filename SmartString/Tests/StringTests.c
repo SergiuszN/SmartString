@@ -31,9 +31,11 @@ void test_SmartString() {
 }
 
 void test_SmartStringArray() {
+    /*
     test_add();
     test_get();
     test_find();
+     */
 }
 
 void test_new_SmartString() {
@@ -332,6 +334,7 @@ void test_deleteAllBetween() {
     rightClearString.destroy(&rightClearString);
 }
 
+/*
 void test_add() {
     printf("* Test add()...\n");
     SmartString row1 = new_SmartStringFromString("row1");
@@ -401,4 +404,4 @@ void test_find() {
     row3.destroy(&row3);
     row5.destroy(&row5);
     array.destroy(&array);
-}
+}*/

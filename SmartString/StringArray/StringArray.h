@@ -3,35 +3,25 @@
 
 #include "../String/String.h"
 
-typedef struct SmartStringArrayBlock {
-    // variables
-    struct SmartString field;
-    struct SmartStringArrayBlock *next;
-    struct SmartStringArrayBlock *prev;
-
-    // functions
-    struct SmartStringArrayBlock* (*pushBack) (struct SmartStringArrayBlock*, struct SmartString);
-    struct SmartStringArrayBlock* (*getBlock) (struct SmartStringArrayBlock*, int);
-    void (*destroy) (struct SmartStringArrayBlock*, int);
-
-} SmartStringArrayBlock;
+typedef struct SmartStringArrayNode {
+    struct SmartString *value;
+    struct SmartStringArrayNode *next;
+    struct SmartStringArrayNode *prev;
+}SmartStringArrayNode;
 
 typedef struct SmartStringArray {
-    // variables
     int length;
-    struct SmartStringArrayBlock *head;
-    struct SmartStringArrayBlock *current;
+    struct SmartStringArrayNode *head;
 
-    // functions
-    void (*add)(struct SmartStringArray*, struct SmartString);
-    SmartString (*get)(struct SmartStringArray*, int);
-    int (*find)(struct SmartStringArray*, SmartString*);
+    void (*push) (struct SmartStringArray*, struct SmartString*);
+    struct SmartStringArrayNode* (*getNode) (struct SmartStringArray*, int);
+    struct SmartString* (*get) (struct SmartStringArray*, int);
     void (*destroy) (struct SmartStringArray*);
+    int (*find) (struct SmartStringArray*,struct SmartString*);
+    int (*findFrom)(struct SmartStringArray*,struct SmartString*, int);
+}SmartStringArray;
 
-} SmartStringArray;
-
-
-SmartStringArrayBlock* new_SmartStringArrayBlock(struct SmartString);
-SmartStringArray new_SmartStringArray(struct SmartString);
+SmartStringArray new_SmartStringArray();
+SmartStringArrayNode* new_SmartStringArrayNode(struct SmartString*);
 
 #endif //CCLASECOMPILER_STRINGARRAY_H
